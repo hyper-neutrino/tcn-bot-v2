@@ -1,0 +1,13 @@
+{
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "file-ez": "^1.0.0",
+    "mongodb": "^4.7.0",
+    "node-fetch": "^3.2.6",
+    "paimon.js": "^1.0.7",
+    "shlex": "^2.1.0"
+  }
+}
