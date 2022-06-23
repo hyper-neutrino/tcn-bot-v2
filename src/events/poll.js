@@ -101,6 +101,10 @@ async function process(interaction, poll, args) {
         await set_vote(id, uid, value);
         return `Your vote has been set to __${value}__.`;
     } else if (args[2] == "trigger") {
+        if (poll.choices.includes(uid)) {
+            return "You may not vote in an election you are running in.";
+        }
+
         const ranks = new Map();
         const ballot = (poll.votes || {})[uid];
         if (ballot && ballot != -1) {
