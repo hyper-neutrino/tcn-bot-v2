@@ -205,6 +205,10 @@ async function process(interaction, poll, args) {
             ephemeral: true,
         });
     } else if (args[2] == "abstain") {
+        if (poll.type == "election" && poll.choices.includes(uid)) {
+            return "You may not vote in an election you are running in.";
+        }
+
         await set_vote(id, uid, -1);
         return "You have chosen to ABSTAIN in this vote.";
     } else if (args[2] == "view") {
