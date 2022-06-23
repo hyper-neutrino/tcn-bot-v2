@@ -71,8 +71,6 @@ export default new Event({
                 try {
                     await commands[key](message, args);
                 } catch (e) {
-                    console.error(e?.stack ?? e);
-
                     await message.reply({
                         embeds: [
                             {
