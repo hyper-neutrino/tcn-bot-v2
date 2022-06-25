@@ -44,6 +44,10 @@ export default async function (message, args) {
                 },
             ],
         });
+
+        await message.client.log(
+            `**${message.author.tag}** set the vote channel to ${channel}.`
+        );
     } else {
         await message.reply({
             embeds: [

@@ -274,7 +274,7 @@ async function process(interaction, poll, args) {
                 tag = "(Error fetching tag)";
             }
 
-            if (!ballot) {
+            if (ballot === undefined) {
                 waiting.push([tag, voter]);
             } else if (ballot == -1) {
                 (poll.anon ? voter : abstained).push([tag, voter]);

@@ -27,5 +27,8 @@ export default async function (message, args) {
     } else {
         await db("polls").findOneAndDelete({ id });
         await messages.first().reply(`Deleted poll with ID \`${id}\`.`);
+        await message.client.log(
+            `**${message.author.tag}** deleted the poll with ID \`${id}\`.`
+        );
     }
 }

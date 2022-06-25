@@ -25,7 +25,8 @@ export default new Event({
     event: "messageCreate",
 
     async run(message) {
-        if (message.guild.id != config.guild_id) return;
+        if (message.author.id == message.client.user.id) return;
+        if (message.guild?.id != config.guild_id) return;
 
         let content;
 

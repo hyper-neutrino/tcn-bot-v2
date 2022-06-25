@@ -47,6 +47,14 @@ Client.prototype.parse_channel = async function (string) {
     }
 };
 
+Client.prototype.log = async function (message) {
+    try {
+        return await (
+            await this.channels.fetch("957305086902698034")
+        ).send(message);
+    } catch {}
+};
+
 export default new Client({
     intents: 131071,
     partials: ["CHANNEL", "MESSAGE", "REACTION"],

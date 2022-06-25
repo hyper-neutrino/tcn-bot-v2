@@ -14,6 +14,14 @@ export default async function (message, args) {
         throw new Error("Duration must be a positive number.");
     }
 
+    let dm = args.shift();
+    if (dm) {
+        dm = parseFloat(dm);
+        if (isNaN(dm) || dm <= 0) {
+            throw new Error("DM reminder threshold must be a positive number.");
+        }
+    }
+
     const poll = await get_poll(id);
     if (!poll) throw new Error(`No poll with ID \`${id}\`.`);
 
@@ -35,6 +43,12 @@ export default async function (message, args) {
         messages.push(`Posted poll \`${id}\`.`);
     }
 
+    if (dm) {
+        messages.push(
+            `I will DM all eligible voters who have not voted ${dm} hour(s) before the poll closes.`
+        );
+    }
+
     if (poll.posted) {
         messages.push(
             "This poll has been posted before. If multiple copies exist, unexpected behavior may occur. If the other copies have been deleted, you can disregard this message."
@@ -42,12 +56,16 @@ export default async function (message, args) {
     }
 
     if (messages.length > 0) await message.reply(messages.join(" "));
+    await message.client.log(
+        `**${message.author.tag}** posted the poll with ID \`${id}\`.`
+    );
 
     await db("polls").findOneAndUpdate(
         { id },
         {
             $set: {
                 time: poll.time,
+                dm,
                 posted: true,
                 channel: channel.id,
                 message: sent.id,

@@ -26,6 +26,10 @@ export default async function (message, args) {
                 },
             ],
         });
+
+        await message.client.log(
+            `**${message.author.tag}** changed my prefix to \`${args[0]}\`.`
+        );
     } else {
         await message.reply({
             embeds: [

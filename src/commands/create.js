@@ -26,4 +26,8 @@ export default async function (message, args) {
             },
         ],
     });
+
+    await message.client.log(
+        `**${message.author.tag}** created a ${type} poll: \`${poll.id}\``
+    );
 }
