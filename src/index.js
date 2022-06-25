@@ -71,13 +71,14 @@ client.on("ready", async () => {
                     }
 
                     if (failed.length > 0) {
-                        await vote_channel.send(
-                            `${failed.join(
+                        await vote_channel.send({
+                            content: `${failed.join(
                                 " "
                             )} Hello! Please remember to vote on the poll (you are eligible to vote on \`${
                                 poll.id
-                            }\` and have not yet voted). Remember to check <#929771954544709642> for information and recent discussions and events. (I could not DM you - make sure you have DMs from server members on for this server and have not blocked me.)`
-                        );
+                            }\` and have not yet voted). Remember to check <#929771954544709642> for information and recent discussions and events. (I could not DM you - make sure you have DMs from server members on for this server and have not blocked me.)`,
+                            allowedMentions: { parse: ["users"] },
+                        });
                     }
                 }
             }

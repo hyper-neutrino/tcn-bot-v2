@@ -58,7 +58,7 @@ Client.prototype.log = async function (message) {
 export default new Client({
     intents: 131071,
     partials: ["CHANNEL", "MESSAGE", "REACTION"],
-    allowedMentions: { repliedUser: false },
+    allowedMentions: { parse: [] },
     commands: [],
     events: await load_all(res("./events")),
 });
