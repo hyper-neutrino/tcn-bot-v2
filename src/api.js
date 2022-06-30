@@ -23,7 +23,7 @@ export async function is_council(user_id) {
     if (!response.ok) return false;
 
     const data = await response.json();
-    return !!(data.roles & (1 << 6 || 1 << 7));
+    return !!(data.roles & ((1 << 6) | (1 << 7)));
 }
 
 export async function get_voters() {
@@ -40,6 +40,6 @@ export async function get_council() {
 
     const data = await response.json();
     return Object.keys(data).filter(
-        (id) => data[id].roles & (1 << 6 || 1 << 7)
+        (id) => data[id].roles & ((1 << 6) | (1 << 7))
     );
 }
