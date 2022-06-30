@@ -2,6 +2,9 @@ import { get_council, get_voters } from "./api.js";
 import { alphabet_emojis } from "./utils.js";
 
 export default async function (poll) {
+    const eligible = poll.restricted ? await get_voters() : await get_council();
+    const eset = new Set(eligible);
+
     const title = `**[ ${poll.id} ]**`;
     const description = `**${
         poll.type == "election"
@@ -25,15 +28,13 @@ export default async function (poll) {
             !poll.live &&
             poll.closed &&
             poll.quorum &&
-            poll.quorum *
-                (poll.restricted ? await get_voters() : await get_council())
-                    .length >
-                Object.keys(poll.voters).length
+            poll.quorum * eligible.length >
+                Object.keys(poll.voters).filter((id) => eset.has(id)).length
         ) {
             value =
                 "Quorum was not reached so the results will not be shown yet.";
         } else {
-            const { scores, abstain, total } = tally(poll);
+            const { scores, abstain, total } = tally(poll, eset);
 
             if (poll.type == "proposal") {
                 const { yes, no } = scores;
@@ -166,8 +167,10 @@ export default async function (poll) {
     };
 }
 
-function tally(poll) {
-    const ballots = Object.keys(poll.votes).map((key) => poll.votes[key]);
+function tally(poll, eset) {
+    const ballots = Object.keys(poll.votes)
+        .filter((id) => eset.has(id))
+        .map((key) => poll.votes[key]);
 
     let abstain = 0;
     let total = 0;
