@@ -29,7 +29,7 @@ export default async function (poll) {
             poll.closed &&
             poll.quorum &&
             poll.quorum * eligible.length >
-                Object.keys(poll.voters).filter((id) => eset.has(id)).length
+                Object.keys(poll.votes).filter((id) => eset.has(id)).length
         ) {
             value =
                 "Quorum was not reached so the results will not be shown yet.";
@@ -168,12 +168,16 @@ export default async function (poll) {
 }
 
 function tally(poll, eset) {
+    console.log(eset);
+    console.log(Object.keys(poll.votes));
+
     const ballots = Object.keys(poll.votes)
         .filter((id) => eset.has(id))
         .map((key) => poll.votes[key]);
 
     let abstain = 0;
     let total = 0;
+
     const scores = {};
 
     for (const ballot of ballots) {
