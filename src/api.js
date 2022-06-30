@@ -15,7 +15,7 @@ export async function is_voter(user_id) {
     if (!response.ok) return false;
 
     const data = await response.json();
-    return !!(data.roles && 1 << 8);
+    return !!(data.roles & (1 << 8));
 }
 
 export async function is_council(user_id) {
