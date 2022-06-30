@@ -2,6 +2,8 @@ import { get_council, get_voters } from "./api.js";
 import { alphabet_emojis } from "./utils.js";
 
 export default async function (poll) {
+    console.log(poll);
+
     const eligible = poll.restricted ? await get_voters() : await get_council();
     const eset = new Set(eligible);
 
@@ -168,9 +170,6 @@ export default async function (poll) {
 }
 
 function tally(poll, eset) {
-    console.log(eset);
-    console.log(Object.keys(poll.votes));
-
     const ballots = Object.keys(poll.votes)
         .filter((id) => eset.has(id))
         .map((key) => poll.votes[key]);
