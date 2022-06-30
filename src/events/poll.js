@@ -277,7 +277,7 @@ async function process(interaction, poll, args) {
             if (ballot === undefined) {
                 waiting.push([tag, voter]);
             } else if (ballot == -1) {
-                (poll.anon ? voter : abstained).push([tag, voter]);
+                (poll.anon ? voted : abstained).push([tag, voter]);
             } else {
                 let vote;
 
