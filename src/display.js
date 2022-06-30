@@ -4,7 +4,7 @@ import { alphabet_emojis } from "./utils.js";
 export default async function (poll) {
     console.log(poll);
 
-    const eligible = poll.restricted ? await get_voters() : await get_council();
+    const eligible = poll.restrict ? await get_voters() : await get_council();
     const eset = new Set(eligible);
 
     const title = `**[ ${poll.id} ]**`;
