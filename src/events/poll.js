@@ -30,7 +30,7 @@ export default new Event({
                     ? await is_voter(interaction.user.id)
                     : await is_council(interaction.user.id))
             ) {
-                await interaction.reply({
+                return await interaction.reply({
                     content: "You are not eligible to vote.",
                     ephemeral: true,
                 });
