@@ -77,7 +77,7 @@ async function process(interaction, poll, args) {
         return "This poll appears to have been deleted from the database.";
     }
 
-    if (new Date() > poll.time) {
+    if (!["view", "info", "list"].includes(args[2]) && new Date() > poll.time) {
         await close(interaction.message, poll);
 
         return "Sorry, this poll is supposed to be closed already. Either this is not the most recent copy or the scheduler was just about to run.";
