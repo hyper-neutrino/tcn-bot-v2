@@ -41,7 +41,9 @@ export default async function (client, poll) {
     }
 
     if (failed.length > 0) {
-        await get_vote_channel.send({
+        await (
+            await get_vote_channel()
+        ).send({
             content: `${failed.join(
                 " "
             )} Hello! Please remember to vote on the poll (you are eligible to vote on \`${
