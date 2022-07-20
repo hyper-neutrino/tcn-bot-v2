@@ -2,7 +2,12 @@ import { get_council, get_voters } from "./api.js";
 import { alphabet_emojis } from "./utils.js";
 
 export default async function (poll) {
-    const eligible = poll.restrict ? await get_voters() : await get_council();
+    let eligible = poll.restrict ? await get_voters() : await get_council();
+
+    if (poll.type == "election") {
+        eligible = eligible.filter((id) => !poll.choices.includes(id));
+    }
+
     const eset = new Set(eligible);
 
     const title = `**[ ${poll.id} ]**`;
