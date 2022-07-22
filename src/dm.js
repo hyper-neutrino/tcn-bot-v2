@@ -42,7 +42,7 @@ export default async function (client, poll) {
 
     if (failed.length > 0) {
         await (
-            await get_vote_channel()
+            await get_vote_channel(client)
         ).send({
             content: `${failed.join(
                 " "

@@ -71,7 +71,8 @@ export async function parse_poll(client, args, type) {
     let option;
 
     while ((option = args.length > 0)) {
-        switch (args.shift()) {
+        const arg = args.shift();
+        switch (arg) {
             case "--quorum":
             case "-q":
                 if (poll.quorum !== undefined) {
@@ -202,7 +203,7 @@ export async function parse_poll(client, args, type) {
 
                 break;
             default:
-                throw new Error(`Unknown option \`${option}\`.`);
+                throw new Error(`Unknown option \`${arg}\`.`);
         }
     }
 
