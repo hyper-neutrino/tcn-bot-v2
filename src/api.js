@@ -7,7 +7,7 @@ export async function is_observer(user_id) {
     if (!response.ok) return false;
 
     const data = await response.json();
-    return data.exec || data.observer;
+    return data.roles.includes("observer");
 }
 
 export async function is_voter(user_id) {
@@ -15,7 +15,7 @@ export async function is_voter(user_id) {
     if (!response.ok) return false;
 
     const data = await response.json();
-    return !!(data.roles & (1 << 8));
+    return data.roles.includes("voter");
 }
 
 export async function is_council(user_id) {
@@ -23,23 +23,21 @@ export async function is_council(user_id) {
     if (!response.ok) return false;
 
     const data = await response.json();
-    return !!(data.roles & ((1 << 6) | (1 << 7)));
+    return ["owner", "advisor"].some(role => data.roles.includes(role));
 }
 
 export async function get_voters() {
-    const response = await fetch(API + `/users/voters`);
-    if (!response.ok) return [];
-
-    const data = await response.json();
-    return Object.keys(data);
-}
-
-export async function get_council() {
     const response = await fetch(API + `/users`);
     if (!response.ok) return [];
 
     const data = await response.json();
-    return Object.keys(data).filter(
-        (id) => data[id].roles & ((1 << 6) | (1 << 7))
-    );
+    return data.filter(user => user.roles.includes("voter")).map(user => user.id);
+}
+
+export async function get_council() {
+    const response = await fetch(API + `/guilds`);
+    if (!response.ok) return [];
+
+    const data = await response.json();
+    return data.map(guild => [guild.owner, guild.advisor]).flat();
 }
