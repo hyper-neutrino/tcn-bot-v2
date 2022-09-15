@@ -39,5 +39,5 @@ export async function get_council() {
     if (!response.ok) return [];
 
     const data = await response.json();
-    return data.map(guild => [guild.owner, guild.advisor]).flat();
+    return data.map(guild => [guild.owner, guild.advisor]).flat().filter(x => x);
 }
