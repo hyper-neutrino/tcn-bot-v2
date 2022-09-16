@@ -58,7 +58,7 @@ export default async function (poll) {
                         (key) =>
                             `${key} - **${scores[key]} vote${
                                 scores[key] == 1 ? "" : "s"
-                            }** (${((scores[key] / (total || 1)) * 100).toFixed(
+                            }** (${((scores[key] / ((total - abstain) || 1)) * 100).toFixed(
                                 2
                             )}%)`
                     )
